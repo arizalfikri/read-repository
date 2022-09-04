@@ -10,8 +10,9 @@ export default function FetchData(username, page) {
         type: FETCH_REPOSITORIES,
         payload: response.data,
       });
+        return true
     } catch (error) {
-      console.log(error);
+        return false
     }
   };
 }

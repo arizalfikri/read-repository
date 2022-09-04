@@ -36,14 +36,14 @@ export default function Repositories({ page, setPage }) {
       )}
       <div className="flex gap-2 justify-center py-3">
         <button
-          className="rounded-full bg-slate-300 w-5 h-5 text-center"
+          className="rounded-full bg-slate-300 hover:bg-slate-200 w-5 h-5 text-center"
           onClick={() => decrement()}
         >
           {"<"}
         </button>
         <p>{page}</p>
         <button
-          className="rounded-full bg-slate-300 w-5 h-5 text-center"
+          className="rounded-full bg-slate-300 hover:bg-slate-200 w-5 h-5 text-center"
           onClick={() => increment()}
         >
           {">"}
