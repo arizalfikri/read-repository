@@ -1,11 +1,24 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import search from "./assets/icon/search.png";
+import FetchData from "./store/actions/action";
 export default function App() {
+  const [username, setusername] = useState("");
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(FetchData(username));
+  };
   return (
     <div className="App flex flex-col items-center gap-6 py-8 text-sm">
       <div className="rounded-md drop-shadow-xl flex flex-col gap-2">
         <label className="font-bold">Username Github</label>
-        <form className="flex justify-center gap-1">
-          <input className="rounded-full px-4 py-1" placeholder="username" />
+        <form onSubmit={handleSubmit} className="flex justify-center gap-1">
+          <input
+            className="rounded-full px-4 py-1"
+            placeholder="username"
+            onChange={(e) => setusername(e.target.value)}
+          />
           <button type="submit">
             <img
               src={search}
