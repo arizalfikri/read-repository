@@ -9,7 +9,7 @@ export default function counterReducer(state = initialState, action) {
     case FETCH_REPOSITORIES:
       return {
         ...state,
-        data: action.payload,
+        repositories: action.payload,
       };
     default:
       return state;
