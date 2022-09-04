@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_DATA } from "./actionType";
+import { FETCH_REPOSITORIES } from "./actionType";
 
 export default function FetchData(username) {
   return async (dispatch) => {
