@@ -5,24 +5,16 @@ import Repositories from "../components/Repositories";
 import github from "../assets/icon/github.png";
 import github_white from "../assets/icon/github-white.png";
 import { FetchData } from "../store/actions/action";
-import { useNavigate } from "react-router-dom";
 export default function Home() {
   const [username, setusername] = useState("");
-  const [page, setPage] = useState(1);
-  const [isLoading, setLoading] = useState(true);
+  const [isLogin, setLogin] = useState(true);
+  const [notLogin, setNotLogin] = useState(true);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const data = useSelector((state) => state.repositories);
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(FetchData(username, page)).then(() => {
-      setLoading(false);
-    });
+    dispatch(FetchData(username));
   };
-  useEffect(() => {
-    dispatch(FetchData(username, page)).then(() => {
-      setLoading(false);
-    });
-  }, [page, isLoading]);
   return (
     <div className="flex items-center justify-center gap-10 min-h-screen text-sm">
       <div className="rounded-md drop-shadow-xl flex flex-col gap-4">
@@ -59,16 +51,14 @@ export default function Home() {
           </a>
         </div>
       </div>
-      <div>
-        <h1 className="text-left">Repositories :</h1>
-        {isLoading ? (
-          <div className="flex flex-col gap-1 items-center mt-8">
-            <div className="animate-spin w-5 h-5 border-2 rounded-full border-t-2 border-t-slate-400"></div>
-            <p>Loading....</p>
-          </div>
-        ) : (
-          <Repositories page={page} setPage={setPage} />
-        )}
+      <div className="flex flex-col gap-0">
+        <p className="text-center bg-[#464646] text-white py-2 px-3 rounded-t-xl drop-shadow-xl">
+          total : {data.length > 0 ? data.length + 1 : 0} repositories
+        </p>
+        <Repositories
+          type={localStorage.getItem("access_token") ? setLogin : setNotLogin}
+          value={localStorage.getItem("access_token") ? isLogin : notLogin}
+        />
       </div>
     </div>
   );
