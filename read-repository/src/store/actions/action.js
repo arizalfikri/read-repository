@@ -17,11 +17,15 @@ export const FetchData = (username, page) => {
   };
 };
 
-export const SignIn = () => {
+export const confirmSign = () => {
   return async (dispatch) => {
     try {
-      let response = await axios.get(`http://localhost:3000/callback`);
-      console.log(response)
+      let response = await axios.get(`http://localhost:3000/access_token`);
+      localStorage.setItem("access_token", response.data.access_token);
+      if (!response.data.access_token) {
+        throw new Error("no access token");
+      }
+      console.log(response);
       return true;
     } catch (error) {
       return false;

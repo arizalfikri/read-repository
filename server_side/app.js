@@ -9,6 +9,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+let access_token = "";
+
 app.get("/callback", async (req, res) => {
   try {
     let response = await axios.post(
@@ -16,12 +18,17 @@ app.get("/callback", async (req, res) => {
     );
     let tmp = response.data.split("&");
     let result = tmp[0].split("=");
-    res.status(200).json({
-      access_token: result[1],
-    });
+    access_token = result[1];
+    res.redirect("http://localhost:3001/sing-in");
   } catch (error) {
     console.log(error);
   }
+});
+
+app.get("/access_token", (req, res) => {
+  res.status(200).json({
+    access_token,
+  });
 });
 
 app.listen(port, () => {
