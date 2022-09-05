@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FETCH_REPOSITORIES } from "./actionType";
-export default function FetchData(username, page) {
+export const FetchData = (username, page) => {
   return async (dispatch) => {
     try {
       let response = await axios.get(
@@ -10,9 +10,21 @@ export default function FetchData(username, page) {
         type: FETCH_REPOSITORIES,
         payload: response.data,
       });
-        return true
+      return true;
     } catch (error) {
-        return false
+      return false;
     }
   };
-}
+};
+
+export const SignIn = () => {
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`http://localhost:3000/callback`);
+      console.log(response)
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+};

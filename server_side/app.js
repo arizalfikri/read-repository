@@ -9,12 +9,16 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/github_signup", async (req, res) => {
+app.get("/callback", async (req, res) => {
   try {
-    let response = await axios.get(
-      `https://github.com/login/oauth/authorize?client_id=${process.env.client_id}`
+    let response = await axios.post(
+      `https://github.com/login/oauth/access_token?client_id=${process.env.client_id}&client_secret=${process.env.client_secret}&code=${req.query.code}`
     );
-    res.send(response.data);
+    let tmp = response.data.split("&");
+    let result = tmp[0].split("=");
+    res.status(200).json({
+      access_token: result[1],
+    });
   } catch (error) {
     console.log(error);
   }
